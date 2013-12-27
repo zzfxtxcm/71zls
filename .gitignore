@@ -1,0 +1,12 @@
+# win
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.tmp
+
+# mac
+.DS_Store
+
+# Thinkphp
+/Runtime/
+/Uploads/
