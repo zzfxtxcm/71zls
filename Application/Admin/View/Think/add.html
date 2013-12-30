@@ -3,7 +3,7 @@
 <block name="body">
 <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
     <div class="main-title cf">
-        <h2>新增 [{$model['title']}]</h2>
+        <h2>新增0000000000 [{$model['title']}]</h2>
     </div>
     <!-- 标签页导航 -->
 <div class="tab-wrap">
@@ -29,6 +29,13 @@
                             </case>
                             <case value="string">
                                 <input type="text" class="text input-large" name="{$field.name}" value="">
+                            </case>
+                             <case value="selectdata">
+                                <select name="{$field.name}">
+                                    <volist name=":parse_field_data($field['extra'])" id="vo">
+                                        <option value="{$key}" <eq name="field.value" value="$key">selected</eq>>{$vo}</option>
+                                    </volist>
+                                </select>
                             </case>
                             <case value="textarea">
                                 <label class="textarea input-large">

@@ -79,6 +79,7 @@ function get_attribute_type($type=''){
     	'editor'    =>  array('编辑器','text NOT NULL'),
     	'picture'   =>  array('上传图片','int(10) UNSIGNED NOT NULL'),
     	'file'    	=>  array('上传附件','int(10) UNSIGNED NOT NULL'),
+		'selectdata' => array('关联枚举','char(50) NOT NULL'),
     );
     return $type?$_type[$type][0]:$_type;
 }
@@ -370,4 +371,23 @@ function get_action_type($type, $all = false){
 		return $list;
 	}
 	return $list[$type];
+}
+
+
+
+function parse_field_data($string) {
+        $rule = explode('|', $string);
+        foreach ($rule as $fields){
+            $field = empty($fields) ? array() : explode(':', $fields);
+            if(!empty($field)){
+                $rules[$field[0]] = $field[1];
+            }
+        }
+        $res = M(ucfirst($rules['table']))->Field($rules['field'])->where($rules['condition'])->select();
+        $value  =   array();
+    $fields = explode(',', $rules['field']);
+        foreach ($res as $val) {
+            $value[$val[$fields[0]]]   = $val[$fields[1]];
+        }
+    return $value;
 }
