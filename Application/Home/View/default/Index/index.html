@@ -1,48 +1,70 @@
-<extend name="Base/common"/>
+<extend name="Base/newcommon"/>
+<block name="style1">
 
-<block name="header">
-    <header class="jumbotron subhead" id="overview">
-        <div class="container">
-            <h2>源自相同起点，演绎不同精彩！</h2>
-            <p class="lead"></p>
-        </div>
-    </header>
 </block>
-
-<block name="side">
-<!-- 左侧 nav
-================================================== -->
-    <div class="span3 bs-docs-sidebar">
-        <ul class="nav nav-list bs-docs-sidenav">
-            {:W('Category/lists', array(1, true))}
-        </ul>
-    </div>
-</block>
-
 <block name="body">
-    <div class="span9">
-        <!-- Contents
-        ================================================== -->
-        <section id="contents">
-            <article:list name="article" category="1" child="true">
-                <div class="">
-                    <h3><a href="{:U('Article/detail?id='.$article['id'])}">{$article.title}</a></h3>
-                </div>
-                <div>
-                    <p class="lead">{$article.description}</p>
-                </div>
-                <div>
-                    <span><a href="{:U('Article/detail?id='.$article['id'])}">查看全文</a></span>
-                    <span class="pull-right">
-                        <span class="author">{$article.uid|get_username}</span>
-                        <span>于 {$article.create_time|date='Y-m-d H:i',###}</span> 发表在 <span>
-                        <a href="{:U('Article/lists?category='.get_category_name($article['category_id']))}">{$article.category_id|get_category_title}</a></span> ( 阅读：{$article.view} )
-                    </span>
-                </div>
-                <hr/>
-            </article:list>
-
-        </section>
-    </div>
+<div class="container mb100">
+    <h1><img src="Public/static/bootstrap3/images/logo.png" class="center-block" alt=""></h1>
+    <div class="row mt50">
+      <div class="col-md-12 text-center">
+        <div class="btnTooltip">
+            <a href="#" class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="left" title="在此免费发布项目、奖金、服务信息、帮助大家一起创业吧">免费发布</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#" class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="right" title="在此发布你的创业需求，将为你提供最符合你想要的东西">创业帮帮</a>
         </div>
+      </div>
+    </div>
+    
+    <div class="projectSearch center-block mt50">
+      <ul id="myTab" class="nav nav-tabs">
+        <li class="active f14"><a href="#project" data-toggle="tab">找项目</a></li>
+        <li class="f14"><a href="#bonuses" data-toggle="tab">找奖金</a></li>
+        <li class="f14"><a href="#service" data-toggle="tab">找服务</a></li>
+        <li class="f14"><a href="#oneline" data-toggle="tab">同城在线</a></li>
+        <li class="f14"><a href="#clue" data-toggle="tab">创业者俱乐部</a></li>
+      </ul>
+      <div id="myTabContent" class="tab-content pt10 text-center">
+        <div class="tab-pane fade active in" id="project">
+          <form action="" class="form-inline" role="form">
+            <div class="form-group">
+              <input type="email" class="form-control" id="exampleInputEmail2" placeholder="请输入关键字">
+            </div>
+            <select class="form-control">
+              <option>项目类别</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+            <select class="form-control">
+              <option>投资额度</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+            <select class="form-control">
+              <option>所在区域</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+            <button type="submit" class="btn btn-success">搜索</button>
+          </form>
+          <ul class="list-inline mt10 pull-left">
+            <li class="text-success">热门关键词:</li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+          </ul>
+        </div>
+        <div class="tab-pane fade" id="bonuses"></div>
+        <div class="tab-pane fade" id="service"></div>
+        <div class="tab-pane fade" id="oneline"></div>
+        <div class="tab-pane fade" id="clue"></div>
+      </div>
+    </div>
+  </div>
+
 </block>

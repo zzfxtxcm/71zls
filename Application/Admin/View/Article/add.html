@@ -58,6 +58,13 @@
                                     </volist>
                                 </select>
                             </case>
+                            <case value="selectdata">
+                                <select name="{$field.name}">
+                                    <volist name=":parse_field_data($field['extra'])" id="vo">
+                                        <option value="{$key}" <eq name="field.value" value="$key">selected</eq>>{$vo}</option>
+                                    </volist>
+                                </select>
+                            </case>
                             <case value="select">
                                 <select name="{$field.name}">
                                     <volist name=":parse_field_attr($field['extra'])" id="vo">

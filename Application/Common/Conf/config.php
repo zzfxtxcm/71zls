@@ -30,7 +30,7 @@ return array(
 
     /* URL配置 */
     'URL_CASE_INSENSITIVE' => true, //默认false 表示URL区分大小写 true则表示不区分大小写
-    'URL_MODEL'            => 3, //URL模式
+    'URL_MODEL'            => 1, //URL模式
     'VAR_URL_PARAMS'       => '', // PATHINFO URL参数变量
     'URL_PATHINFO_DEPR'    => '/', //PATHINFO URL分割符
 
@@ -45,7 +45,8 @@ return array(
     'DB_PWD'    => 'aLLb93',  // 密码
     'DB_PORT'   => '3306', // 端口
     'DB_PREFIX' => 'zls_', // 数据库表前缀
-
+    /*添加email动态加载配置节点，用来加载同级目录下的 email.php 配置文件*/
+    'LOAD_EXT_CONFIG'=>'email',
     /* 文档模型配置 (文档模型核心配置，请勿更改) */
-    'DOCUMENT_MODEL_TYPE' => array(2 => '主题', 1 => '目录', 3 => '段落'),
+    'DOCUMENT_MODEL_TYPE' => array(2 => '主题', 1 => '目录', 3 => '段落'), 
 );

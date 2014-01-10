@@ -18,8 +18,24 @@ class UserController extends HomeController {
 
 	/* 用户中心首页 */
 	public function index(){
+		$this->tlogin();//判断是否登陆
+		$this->step = 'center';
+		$this->display(index);
 		
 	}
+    public function edit(){
+    	$this->tlogin();//判断是否登陆
+		$this->step = 'edit';
+		
+		if(IS_POST){ 
+		 echo I('post.qq');
+		 $this->error('验证码输入错误！');
+		
+
+		}
+
+		$this->display(index);
+    }
 
 	/* 注册页面 */
 	public function register($username = '', $password = '', $repassword = '', $email = '', $verify = ''){
@@ -42,8 +58,9 @@ class UserController extends HomeController {
 			$uid = $User->register($username, $password, $email);
 			if(0 < $uid){ //注册成功
 				//TODO: 发送验证邮件
-				$this->success('注册成功！',U('login'));
-			} else { //注册失败，显示错误信息
+				$this->success('注册成功！',U('valemail',array('email'=>$email,'id'=>$uid)));
+			} 
+			else { //注册失败，显示错误信息
 				$this->error($this->showRegError($uid));
 			}
 
@@ -51,7 +68,44 @@ class UserController extends HomeController {
 			$this->display();
 		}
 	}
+	/* 验证邮箱  */
+	public function   valemail(){
+		$this->email = $_GET['email'];
+		$user= M('UcenterMember');
+		$data['id'] = $_GET['id'];
+		$data['status'] =0;
+		$data['key'] =md5($_GET['email']);
+		$user->save($data);
+		//echo U('vemail','',''); 
+		$mail = new \Think\Mail();
+    	$mail->SendMail($_GET['email'],'会员邮箱验证','欢迎注册<a href="http://71zls.com">71zls.com</a>，您的注册邮箱是：'.$_GET['email'].' 点击下面的链接就可以完成邮箱认证：http://127.0.0.1'.U('vemail','','').'/key/'.md5($_GET['email']),'71在路上创业网71zls.com');
+		
+		$this->display();
 
+	}	
+	/*接收邮箱验证*/
+	public function  vemail(){
+		
+ 		//echo $_GET['key'];
+ 		if (!isset($_GET['key'])) {
+ 			$this->error('错误操作！');
+
+ 		}
+ 		else{
+ 		$user= M('UcenterMember');
+ 		$map['key'] = $_GET['key'];
+ 	    $a=$user->where($map)->select(); 
+ 	    if (!isset($a)) {
+ 	    	$this->error('错误操作！');
+ 	    }
+		$data['id'] = $a[0]['id'];
+		$data['key']='';
+		$data['status']=1;
+ 	    $user->save($data);
+ 	    $this->success('注册成功！',U('login'));
+ 	   
+ 	    }
+	}	
 	/* 登录页面 */
 	public function login($username = '', $password = '', $verify = ''){
 		if(IS_POST){ //登录验证
@@ -102,7 +156,15 @@ class UserController extends HomeController {
 		$verify = new \Think\Verify();
 		$verify->entry(1);
 	}
-
+   public function tlogin()
+   {
+   		if (is_login()) {
+   			return true;
+   		}
+   		else{
+   			 $this->error('还么没有登陆，请登陆！',U('login'));
+   		}
+   }
 	/**
 	 * 获取用户注册错误信息
 	 * @param  integer $code 错误编码
